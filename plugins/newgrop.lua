@@ -1,3 +1,13 @@
+--[[
+▀▄ ▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀          
+▀▄ ▄▀                                      ▀▄ ▄▀ 
+▀▄ ▄▀    BY OmarReal                       ▀▄ ▄▀ 
+▀▄ ▄▀     BY OmarReal (Omar_Real7)         ▀▄ ▄▀ 
+▀▄ ▄▀ JUST WRITED BY OmarReal              ▀▄ ▄▀   
+▀▄ ▄▀                                      ▀▄ ▄▀ 
+▀▄▀▀▄▄▀▀▄▄▀▄▄▀▀▄▄▀▀▄▄▀▄▄▀▀▄▄▀▀▄▄▀▄▄▀▀▄▄▀▀▄▄▀▄▄▀▀
+--]]
+
 -- data saved to moderation.json
 -- check moderation plugin
 do
@@ -7,7 +17,7 @@ local function create_group(msg)
     if is_sudo(msg) or is_realm(msg) and is_admin1(msg) then
 		local group_creator = msg.from.print_name
 		create_group_chat (group_creator, group_name, ok_cb, false)
-		return 'Group [ '..string.gsub(group_name, '_', ' ')..' ] has been created.'
+		return 'المجموعة 👥 [ '..string.gsub(group_name, '_', ' ')..' ] تم ✅ صناعتها بنجاح 😚👋🏿'
 	end
 end
 
@@ -722,17 +732,15 @@ function run(msg, matches)
 		user_info(user_id, cb_user_info, {receiver = receiver})
 	end
 
-	if not is_sudo(msg) and not is_realm(msg) and is_admin1(msg) then
-		return
+	if not is_sudo(msg) then
+		if is_realm(msg) and is_admin1(msg) then
+			print("Admin detected")
+		else
+			return
+		end
  	end
 
-    if matches[1] == 'اصنع مجموعه' and matches[2] then
-	if not is_momod(msg) then 
-		return 
-	end
-	if not is_sudo(msg) or is_admin1(msg) and is_realm(msg) then
-		return "You cant create groups!"
-	end
+    if matches[1] == 'اصنع مجموعة' and matches[2] then
         group_name = matches[2]
         group_type = 'group'
         return create_group(msg)
@@ -749,9 +757,9 @@ function run(msg, matches)
     end]]
 
     if matches[1] == 'createrealm' and matches[2] then
-	if not is_sudo(msg) or not is_admin1(msg) and is_realm(msg) then
-		return  "You cant create groups!"
-	end
+			if not is_sudo(msg) then
+				return "Sudo users only !"
+			end
         group_name = matches[2]
         group_type = 'realm'
         return create_realm(msg)
@@ -1047,34 +1055,7 @@ end
 
 return {
   patterns = {
-    "^[#!/](اصنع مجموعه) (.*)$",
-	"^[#!/](createsuper) (.*)$",
-    "^[#!/](createrealm) (.*)$",
-    "^[#!/](setabout) (%d+) (.*)$",
-    "^[#!/](setrules) (%d+) (.*)$",
-    "^[#!/](setname) (.*)$",
-    "^[#!/](setgpname) (%d+) (.*)$",
-    "^[#!/](setname) (%d+) (.*)$",
-    "^[#!/](lock) (%d+) (.*)$",
-    "^[#!/](unlock) (%d+) (.*)$",
-	"^[#!/](mute) (%d+)$",
-	"^[#!/](unmute) (%d+)$",
-    "^[#!/](settings) (.*) (%d+)$",
-    "^[#!/](wholist)$",
-    "^[#!/](who)$",
-	"^[#!/]([Ww]hois) (.*)",
-    "^[#!/](type)$",
-    "^[#!/](kill) (chat) (%d+)$",
-    "^[#!/](kill) (realm) (%d+)$",
-	"^[#!/](rem) (%d+)$",
-    "^[#!/](addadmin) (.*)$", -- sudoers only
-    "^[#!/](removeadmin) (.*)$", -- sudoers only
-	"[#!/ ](support)$",
-	"^[#!/](support) (.*)$",
-    "^[#!/](-support) (.*)$",
-    "^[#!/](list) (.*)$",
-    "^[#!/](log)$",
-    "^[#!/](help)$",
+    "^[#!/](اصنع مجموعة) (.*)$",
     "^!!tgservice (.+)$",
   },
   run = run
